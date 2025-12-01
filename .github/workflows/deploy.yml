@@ -29,7 +29,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Build
         run: npm run build
@@ -54,4 +54,4 @@ jobs:
         uses: actions/deploy-pages@v4
 
       - name: Build project
-        run: pnpm run build:prod # 根据你的 package.json 脚本调整
+        run: npm run build:prod # 根据你的 package.json 脚本调整
