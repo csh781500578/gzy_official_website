@@ -52,3 +52,29 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+            
+      # 1. 安装 pnpm (如果使用 pnpm)
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8 # 指定一个版本号，或者移除此行以使用最新版本
+
+      # 2. 安装 Node.js (此时先不设置缓存)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 3. 安装依赖并生成 lock 文件
+      - name: Install dependencies
+        run: pnpm install # 这一步会在工作目录生成 pnpm-lock.yaml
+
+      # 4. (可选) 再次设置 Node.js 以利用缓存，但可能非必需
+      # - name: Cache node modules
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     cache: 'pnpm'
+      #     # 注意：此步骤现在可以找到上一步生成的 pnpm-lock.yaml 了
+
+      - name: Build project
+        run: pnpm run build:prod # 根据你的 package.json 脚本调整
